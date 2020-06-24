@@ -530,6 +530,9 @@ ModelImpl::Run(
     }
     TRTISTF_TensorListDelete(input_tensors);
 
+    for (size_t i = 0; i < tfinputs.size(); i++) {
+      std::cerr << "INPUT " << i + 1 << " Tensor: " << tfinputs[i].DebugString();
+    }
     tensorflow::RunMetadata meta_data;
     std::vector<tensorflow::Tensor> tfoutputs;
     RETURN_IF_TF_ERROR(
@@ -538,6 +541,8 @@ ModelImpl::Run(
     *output_tensors = nullptr;
     for (auto ri = output_names.rbegin(); ri != output_names.rend(); ++ri) {
       const auto oidx = output_index_map_[*ri];
+      std::cerr << "OUTPUT " << *ri
+                << " Tensor: " << tfoutputs[oidx].DebugString();
       TRTISTF_Tensor* tensor = reinterpret_cast<TRTISTF_Tensor*>(
           new TensorImpl(std::move(tfoutputs[oidx])));
       *output_tensors = TRTISTF_TensorListNew(tensor, *output_tensors);
