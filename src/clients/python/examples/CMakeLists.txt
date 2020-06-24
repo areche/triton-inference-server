@@ -51,6 +51,7 @@ if(${TRITON_ENABLE_GRPC})
       grpc_explicit_int8_content_client.py
       grpc_image_client.py
       simple_grpc_cudashm_client.py
+      simple_grpc_custom_repeat.py
       simple_grpc_health_metadata.py
       simple_grpc_async_infer_client.py
       simple_grpc_infer_client.py
